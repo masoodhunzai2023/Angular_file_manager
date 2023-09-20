@@ -1,0 +1,31 @@
+<div class="file-manager">
+  <h2>File Manager</h2>
+  <p>Current Path: {{ currentPath }}</p>
+  
+    <ul>
+      <li *ngFor="let rootItem of files">
+        <div>
+          <span [ngClass]="{'folder': rootItem.isFolder}" (click)="toggleItem(rootItem)">
+            {{ rootItem.isFolder ? (rootItem.expanded ? '📂 ' : '📁 ') : '' }} {{ rootItem.name }}
+          </span>
+          <ul *ngIf="rootItem.isFolder && rootItem.expanded">
+            <li *ngFor="let item of rootItem.contents">
+              <span [ngClass]="{'folder': item.isFolder}" (click)="toggleItem(item)">
+                {{ item.isFolder ? (item.expanded ? '📂 ' : '📁 ') : '' }} {{ item.name }}
+              </span>
+              <!-- Display children files and folders -->
+              <ul *ngIf="item.isFolder && item.expanded">
+                <li *ngFor="let child of item.contents">
+                  <span [ngClass]="{'folder': child.isFolder}" (click)="toggleItem(child)">
+                    {{ child.isFolder ? (child.expanded ? '📂 ' : '📁 ') : '' }} {{ child.name }}
+                  </span>
+                  <!-- You can nest more levels here if needed -->
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+  
